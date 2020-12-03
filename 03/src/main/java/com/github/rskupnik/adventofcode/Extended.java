@@ -19,7 +19,6 @@ public class Extended {
         long result = Stream.of(new Tuple2<>(1, 1), new Tuple2<>(3, 1), new Tuple2<>(5, 1), new Tuple2<>(7, 1), new Tuple2<>(1, 2))
                 .map(t -> countTrees(inputArray, lineCount, charCount, t._1, t._2))
                 .reduce((i1, i2) -> i1 * i2);
-                //.forEach(i -> System.out.println(i));
         System.out.println(result);
     }
 
