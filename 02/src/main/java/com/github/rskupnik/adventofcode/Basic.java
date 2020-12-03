@@ -1,21 +1,14 @@
 package com.github.rskupnik.adventofcode;
 
 import com.google.common.io.Resources;
-import io.vavr.Tuple2;
 import io.vavr.Tuple4;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Basic {
 
-    private static boolean end = false;
     private static final Pattern PATTERN = Pattern.compile("(\\d+)-(\\d+)\\s*(\\w):\\s*(\\w*)");
 
     public static void main(String[] args) throws IOException {
