@@ -23,8 +23,6 @@ public class Basic {
 
         int result = input.lines().map(line -> {
             Tuple4<Integer, Integer, String, String> parsedInput = parse(line);
-            if (parsedInput == null)
-                return 0;
 
             int amount = (int) parsedInput._4.codePoints()
                     .mapToObj(c -> String.valueOf((char) c))
@@ -39,9 +37,7 @@ public class Basic {
 
     private static Tuple4<Integer, Integer, String, String> parse(String line) {
         var match = PATTERN.matcher(line);
-        if (!match.matches()) {
-            return null;
-        }
+        match.matches();
         return new Tuple4<>(Integer.valueOf(match.group(1)), Integer.valueOf(match.group(2)), match.group(3), match.group(4));
     }
 }
