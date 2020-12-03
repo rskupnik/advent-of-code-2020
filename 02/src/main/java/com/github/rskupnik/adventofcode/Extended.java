@@ -1,39 +1,35 @@
 package com.github.rskupnik.adventofcode;
 
 import com.google.common.io.Resources;
+import io.vavr.Tuple4;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 public class Extended {
 
-    private static boolean end = false;
+    private static final Pattern PATTERN = Pattern.compile("(\\d+)-(\\d+)\\s*(\\w):\\s*(\\w*)");
 
     public static void main(String[] args) throws IOException {
         String input = Resources.toString(Resources.getResource("input.txt"), StandardCharsets.UTF_8);
 
-        // Put in a TreeSet to sort the numbers for easy lookup
-        Set<Integer> inputSet = input.lines().map(Integer::valueOf).collect(Collectors.toCollection(TreeSet::new));
+        int result = input.lines().map(line -> {
+            Tuple4<Integer, Integer, String, String> parsedInput = parse(line);
 
-        // Fuck it, bruteforce
-        inputSet.stream().parallel().forEach(i -> {
-            inputSet.stream().parallel().forEach(j -> {
-                int sum = i + j;
-                if (sum >= 2020) {
-                    return;
-                }
+            char char1 = parsedInput._4.toCharArray()[parsedInput._1 - 1];
+            char char2 = parsedInput._4.toCharArray()[parsedInput._2 - 1];
+            char targetChar = parsedInput._3.toCharArray()[0];
 
-                inputSet.stream().parallel().filter(k -> 2020 - k == sum).findFirst().ifPresent(k -> {
-                    System.out.println("Answer is: " + (i * j * k));
-                    end = true;
-                });
+            return (char1 != char2) && (char1 == targetChar || char2 == targetChar) ? 1 : 0;
+        }).reduce(0, Integer::sum);
 
-                if (end)
-                    System.exit(0);
-            });
-        });
+        System.out.println(result);
+    }
+
+    private static Tuple4<Integer, Integer, String, String> parse(String line) {
+        var match = PATTERN.matcher(line);
+        match.matches();
+        return new Tuple4<>(Integer.valueOf(match.group(1)), Integer.valueOf(match.group(2)), match.group(3), match.group(4));
     }
 }
