@@ -58,9 +58,7 @@ public class Extended {
                 .map(s -> s.split(" "))
                 .map(sa -> Arrays.stream(sa)
                         .map(str -> str.split(":"))
-                        .filter(strAr -> {
-                            return VALIDATORS.containsKey(strAr[0]) && VALIDATORS.get(strAr[0]).apply(strAr[1]);
-                        })
+                        .filter(strAr -> VALIDATORS.containsKey(strAr[0]) && VALIDATORS.get(strAr[0]).apply(strAr[1]))
                         .count() == VALIDATORS.keySet().size() ? 1 : 0).filter(v -> v == 1)
                 .reduce(0, Integer::sum);
         System.out.println(validPassports);
